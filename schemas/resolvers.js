@@ -43,14 +43,14 @@ const resolvers = {
       return { token, user };
     },
     addThought: async (parent, { thought, author }) => {
-      const thought = await Thought.create({ thought, author });
+      const thoughtText = await Thought.create({ thought, author });
 
       await User.findOneAndUpdate(
         { username: author },
         { $addToSet: { thoughts: thought._id } }
       );
 
-      return thought;
+      return thoughtText;
     },
     removeThought: async (parent, { thoughtId }) => {
       return Thought.findOneAndDelete({ _id: thoughtId });
